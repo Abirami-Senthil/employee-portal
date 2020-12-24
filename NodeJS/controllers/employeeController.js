@@ -16,9 +16,9 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   if ( !ObjectId.isValid(req.params.id))
-    return res.status(400).send('No record with given id : $(req.params.id)');
+    return res.status(400).send(`No record with given id : ${req.params.id}`);
   
-    Employee.findById((err, docs) => {
+    Employee.findById(req.params.id, (err, docs) => {
     if(!err) { res.send(docs); }
     else{ 
       console.log('Error in retrieving employees :' + JSON.stringify(err, undefined, 2)); 
@@ -46,7 +46,7 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
   if ( !ObjectId.isValid(req.params.id))
-    return res.status(400).send('No record with given id : $(req.params.id)');
+    return res.status(400).send(`No record with given id : ${req.params.id}`);
   
   var emp = {
     name: req.body.name,
@@ -65,9 +65,9 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   if ( !ObjectId.isValid(req.params.id))
-    return res.status(400).send('No record with given id : $(req.params.id)');
+    return res.status(400).send(`No record with given id : ${req.params.id}`);
   
-    Employee.findByIdAndRemove(req.params.ud, (err, doc) => {
+    Employee.findByIdAndRemove(req.params.id, (err, doc) => {
       if (!err) 
       res.send(doc);
     else
