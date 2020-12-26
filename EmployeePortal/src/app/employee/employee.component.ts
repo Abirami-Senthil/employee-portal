@@ -23,19 +23,16 @@ export class EmployeeComponent implements OnInit {
   }
 
   resetForm(form?: NgForm) {
-    if (form)
-      form.reset();
     this.employeeService.selectedEmployee = {
       _id: undefined,
       name: "",
       position: "",
       roles: [],
-      activate: true
+      activate: true,
     }
   }
 
   onSubmit(form: NgForm) {
-    console.log(form.value)
     if (!form.value._id) {
       this.employeeService.postEmployee({ ...form.value, roles: this.employeeService.selectedEmployee.roles }).subscribe((res) => {
         this.resetForm(form);
@@ -80,7 +77,6 @@ export class EmployeeComponent implements OnInit {
       else{
         this.employeeService.selectedEmployee.roles.splice(index, 1);
       }
-      console.log(this.employeeService.selectedEmployee.roles)
   }
 
   onToggle(emp: Employee) {
