@@ -25,7 +25,7 @@ export class EmployeeComponent implements OnInit {
     if (form)
       form.reset();
     this.employeeService.selectedEmployee = {
-      _id: "",
+      _id: undefined,
       name: "",
       position: "",
       roles: [],
@@ -34,7 +34,7 @@ export class EmployeeComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    if (form.value._id == "") {
+    if (!form.value._id) {
       this.employeeService.postEmployee(form.value).subscribe((res) => {
         this.resetForm(form);
         this.refreshEmployeeList();
