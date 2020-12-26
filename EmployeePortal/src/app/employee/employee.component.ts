@@ -15,6 +15,7 @@ declare var M: any;
 export class EmployeeComponent implements OnInit {
 
   constructor(public employeeService: EmployeeService) { }
+  roles = [ "Developer", "Project Manager", "Product Manager", "Finance Head", "Technical Architect", "Admin"]
 
   ngOnInit() {
     this.resetForm();
@@ -34,15 +35,16 @@ export class EmployeeComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
+    console.log(form.value)
     if (!form.value._id) {
-      this.employeeService.postEmployee(form.value).subscribe((res) => {
+      this.employeeService.postEmployee({ ...form.value, roles: this.employeeService.selectedEmployee.roles }).subscribe((res) => {
         this.resetForm(form);
         this.refreshEmployeeList();
         M.toast({ html: 'Saved successfully', classes: 'rounded' });
       });
     }
     else {
-      this.employeeService.putEmployee(form.value).subscribe((res) => {
+      this.employeeService.putEmployee({ ...form.value, roles: this.employeeService.selectedEmployee.roles }).subscribe((res) => {
         this.resetForm(form);
         this.refreshEmployeeList();
         M.toast({ html: 'Updated successfully', classes: 'rounded' });
@@ -70,7 +72,18 @@ export class EmployeeComponent implements OnInit {
     }
   }
 
-  onToggle(emp: Employee){
+  onRoleChange(role: any) {
+      let index = this.employeeService.selectedEmployee.roles.indexOf(role);
+      if(index == -1){
+        this.employeeService.selectedEmployee.roles.push(role);
+      }
+      else{
+        this.employeeService.selectedEmployee.roles.splice(index, 1);
+      }
+      console.log(this.employeeService.selectedEmployee.roles)
+  }
+
+  onToggle(emp: Employee) {
     emp.activate = !emp.activate
   }
 }
