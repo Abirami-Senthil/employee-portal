@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 
 import { EmployeeService } from '../shared/employee.service';
 import { Employee } from '../shared/employee.model';
+import { throwError } from 'rxjs';
 
 declare var M: any;
 
@@ -15,7 +16,7 @@ declare var M: any;
 export class EmployeeComponent implements OnInit {
 
   constructor(public employeeService: EmployeeService) { }
-  roles = [ "Developer", "Project Manager", "Product Manager", "Finance Head", "Technical Architect", "Admin"]
+  roles = ["Developer", "Project Manager", "Product Manager", "Finance Head", "Technical Architect", "Admin"]
 
   ngOnInit() {
     this.resetForm();
@@ -59,24 +60,29 @@ export class EmployeeComponent implements OnInit {
     this.employeeService.selectedEmployee = emp;
   }
 
-  onDelete(_id: string, form: NgForm) {
-    if (confirm('Are you sure to delete this record ?') == true) {
-      this.employeeService.deleteEmployee(_id).subscribe((res) => {
-        this.refreshEmployeeList();
-        this.resetForm(form);
-        M.toast({ html: 'Deleted successfully', classes: 'rounded' });
-      });
+  onDelete(form: NgForm, _id?: string) {
+    if (_id) {
+      if (confirm('Are you sure to delete this record ?') == true) {
+        this.employeeService.deleteEmployee(_id).subscribe((res) => {
+          this.refreshEmployeeList();
+          this.resetForm(form);
+          M.toast({ html: 'Deleted successfully', classes: 'rounded' });
+        });
+      }
+    }
+    else{
+      throwError('To delete an employee record, ID field cannot be null');
     }
   }
 
   onRoleChange(role: any) {
-      let index = this.employeeService.selectedEmployee.roles.indexOf(role);
-      if(index == -1){
-        this.employeeService.selectedEmployee.roles.push(role);
-      }
-      else{
-        this.employeeService.selectedEmployee.roles.splice(index, 1);
-      }
+    let index = this.employeeService.selectedEmployee.roles.indexOf(role);
+    if (index == -1) {
+      this.employeeService.selectedEmployee.roles.push(role);
+    }
+    else {
+      this.employeeService.selectedEmployee.roles.splice(index, 1);
+    }
   }
 
   onToggle(emp: Employee) {

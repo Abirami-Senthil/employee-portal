@@ -85,7 +85,7 @@
                   <button class="action-btn" (click)="onEdit(emp)" [disabled]="!emp.activate">
                     <i class="material-icons">edit</i>
                   </button>
-                  <button class="action-btn" (click)="onDelete(emp._id,employeeForm)" [disabled]="!emp.activate">
+                  <button class="action-btn" (click)="onDelete(employeeForm, emp._id)" [disabled]="!emp.activate">
                     <i class="material-icons">delete</i>
                   </button>
                 </td>
