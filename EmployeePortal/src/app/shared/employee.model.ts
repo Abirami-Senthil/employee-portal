@@ -3,5 +3,5 @@ export class Employee {
   name!: string;
   position!: string;
   roles!: Array<string>;
-  activate!: Boolean;
+  activate!: boolean;
 }

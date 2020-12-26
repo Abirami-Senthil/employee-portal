@@ -57,7 +57,7 @@
                   <div class="switch">
                     <label>
                       No
-                      <input type="checkbox">
+                      <input type="checkbox" name="activate" #name="ngModel" [(ngModel)]="employeeService.selectedEmployee.activate">
                       <span class="lever"></span>
                       Yes
                     </label>
@@ -85,26 +85,26 @@
                     </tr>
                   </thead>
                   <tr *ngFor="let emp of employeeService.employees">
-                    <td>{{emp.name}}</td>
-                    <td>{{emp.position}}</td>
-                    <td>{{emp.roles}}</td>
+                    <td [ngClass]="{'blur': emp.activate == false}">{{emp.name}}</td>
+                    <td [ngClass]="{'blur': emp.activate == false}">{{emp.position}}</td>
+                    <td [ngClass]="{'blur': emp.activate == false}">{{emp.roles}}</td>
                     <td>
                       <div class="switch">
                         <label>
                           No
-                          <input type="checkbox">
+                          <input type="checkbox" name="activate" (click)="onToggle(emp)" [checked]='emp.activate'>
                           <span class="lever"></span>
                           Yes
                         </label>
                       </div>
                     </td>
                     <td>
-                        <a class="action-btn" (click)="onEdit(emp)">
+                        <button class="action-btn" (click)="onEdit(emp)" [disabled]="!emp.activate">
                           <i class="material-icons">edit</i>
-                        </a>
-                        <a class="action-btn" (click)="onDelete(emp._id,employeeForm)">
+                        </button>
+                        <button class="action-btn" (click)="onDelete(emp._id,employeeForm)" [disabled]="!emp.activate">
                           <i class="material-icons">delete</i>
-                        </a>
+                        </button>
                       </td>
                   </tr>
                 </table>

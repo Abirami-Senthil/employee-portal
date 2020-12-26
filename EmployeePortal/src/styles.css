@@ -32,11 +32,12 @@ div.card{
   height: 400px;
 }
 
-a.action-btn{
-  color: #9e9e9e ;
+button.action-btn{
+  /* color: #9e9e9e ; */
   margin: 0px 5px;
-
+  border-radius: 50px;
 }
+
 a.action-btn:hover{
   cursor: pointer;
 }
@@ -62,4 +63,9 @@ a.action-btn:hover{
 
 .set-roles{
   padding-left: 30px;
+}
+
+.blur{
+  color: gray;
+  font-size: medium;
 }

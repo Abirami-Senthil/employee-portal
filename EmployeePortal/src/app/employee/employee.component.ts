@@ -70,4 +70,7 @@ export class EmployeeComponent implements OnInit {
     }
   }
 
+  onToggle(emp: Employee){
+    emp.activate = !emp.activate
+  }
 }
