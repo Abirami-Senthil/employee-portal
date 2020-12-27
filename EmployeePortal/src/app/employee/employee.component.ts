@@ -86,6 +86,7 @@ export class EmployeeComponent implements OnInit {
   }
 
   onToggle(emp: Employee) {
-    emp.activate = !emp.activate
+    emp.activate = !emp.activate;
+    this.employeeService.putEmployee(emp).subscribe((res) => {});
   }
 }
